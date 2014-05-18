@@ -34,13 +34,13 @@
 
 
 - (void)timerAction:(id)sender {
-  NSLog(@"%s", __PRETTY_FUNCTION__);
-
   CGFloat (^randomPosition)(void) = ^CGFloat {
-    return arc4random_uniform(500);
+    return arc4random_uniform(300);
   };
 
   self.sublayer.position = CGPointMake(randomPosition(), randomPosition());
+  NSLog(@"%s, %@", __PRETTY_FUNCTION__,
+                   NSStringFromPoint(self.sublayer.frame.origin));
 }
 
 @end

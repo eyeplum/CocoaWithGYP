@@ -1,0 +1,97 @@
+#!/usr/bin/env ruby
+
+# Colorize
+
+class String
+def black;          "\033[30m#{self}\033[0m" end
+def red;            "\033[31m#{self}\033[0m" end
+def green;          "\033[32m#{self}\033[0m" end
+def brown;          "\033[33m#{self}\033[0m" end
+def blue;           "\033[34m#{self}\033[0m" end
+def magenta;        "\033[35m#{self}\033[0m" end
+def cyan;           "\033[36m#{self}\033[0m" end
+def gray;           "\033[37m#{self}\033[0m" end
+def bg_black;       "\033[40m#{self}\0330m"  end
+def bg_red;         "\033[41m#{self}\033[0m" end
+def bg_green;       "\033[42m#{self}\033[0m" end
+def bg_brown;       "\033[43m#{self}\033[0m" end
+def bg_blue;        "\033[44m#{self}\033[0m" end
+def bg_magenta;     "\033[45m#{self}\033[0m" end
+def bg_cyan;        "\033[46m#{self}\033[0m" end
+def bg_gray;        "\033[47m#{self}\033[0m" end
+def bold;           "\033[1m#{self}\033[22m" end
+def reverse_color;  "\033[7m#{self}\033[27m" end
+end
+
+
+# Methods
+
+def gyp
+  log('Generating .xcodeproj', 'cyan')
+  execute 'gyp app.gyp --depth=. -f xcode'
+end
+
+def xcodebuild
+  log('Building with Xcode', 'magenta')
+  execute 'xcodebuild -project app.xcodeproj'
+end
+
+def run
+  log('Running', 'blue')
+  execute 'open ./build/Default/TestApp.app'
+end
+
+def lldb
+  log('Debuging with LLDB', 'blue')
+  execute 'lldb ./build/Default/TestApp.app'
+end
+
+def clean
+  log('Cleaning', 'green')
+  execute 'rm -rf build/ *.xcodeproj'
+  log('Clean Finished','green')
+end
+
+def execute(command)
+  system(command)
+end
+
+def log(content, color)
+
+  log_block = lambda do |string|
+    puts "===== #{string} ====="
+  end
+
+  if color.nil?
+    log_block.call content
+  else
+    if String.method_defined? color
+      log_block.call content.send(color)
+    else
+      log_block.call content
+    end
+  end
+end
+
+
+# Command Line Parsing
+
+option = ARGV.shift
+
+if option.nil?
+  clean
+  gyp
+  xcodebuild
+  run
+else
+  case option
+  when 'debug'
+    clean
+    gyp
+    xcodebuild
+    lldb
+  when 'clean'
+    clean
+  end
+end
+

@@ -1,0 +1,8 @@
+# generate .xcodeprj 
+gyp build/app.gyp --depth=. -f xcode
+
+# build .app bundle
+xcodebuild -project build/app.xcodeproj
+
+# run .app
+open build/build/Default/TestApp.app

@@ -13,10 +13,13 @@
         './app/App-Prefix.pch',
         './app/AppDelegate.h',
         './app/AppDelegate.m',
+        './app/ViewController.h',
+        './app/ViewController.m',
       ],
       'link_settings': {
         'libraries': [
           '$(SDKROOT)/System/Library/Frameworks/Cocoa.framework',
+          '$(SDKROOT)/System/Library/Frameworks/QuartzCore.framework',
         ],
       },
       'mac_bundle_resources': [

@@ -39,16 +39,10 @@ from clang_helpers import PrepareClangFlags
 flags = [
     '-Weverything',
     '-fobjc-arc',
-    '-std=c++11',
-    '-stdlib=libc++',
     '-x',
     'objective-c',
     '-I',
     './app/',
-    '-I',
-    './include/',
-    '-isystem',
-    '/usr/include/c++/4.2.1/',
 ]
 
 # Set this to the absolute path to the folder (NOT the file!) containing the

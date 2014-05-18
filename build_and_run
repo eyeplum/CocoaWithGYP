@@ -2,7 +2,8 @@
 gyp app.gyp --depth=. -f xcode
 
 # build .app bundle
-xcodebuild -project build/app.xcodeproj
+xcodebuild -project app.xcodeproj
 
 # run .app
-open build/build/Default/TestApp.app
+open build/Default/TestApp.app
+

@@ -15,13 +15,13 @@
 
   self.view.layer = [CALayer layer];
   self.view.wantsLayer = YES;
-  self.view.layer.backgroundColor = [[NSColor orangeColor] CGColor];
+  self.view.layer.backgroundColor = [[NSColor whiteColor] CGColor];
 
   CALayer *sublayer = [CALayer layer];
   sublayer.frame = CGRectMake(20, 20, 50, 50);
-  sublayer.backgroundColor = [[NSColor yellowColor] CGColor];
+  sublayer.backgroundColor = [[NSColor orangeColor] CGColor];
   sublayer.masksToBounds = YES;
-  sublayer.cornerRadius = 3;
+  sublayer.cornerRadius = 5;
   [self.view.layer addSublayer:sublayer];
   self.sublayer = sublayer;
 
@@ -34,11 +34,19 @@
 
 
 - (void)timerAction:(id)sender {
-  CGFloat (^randomPosition)(void) = ^CGFloat {
-    return arc4random_uniform(300);
+  CGFloat (^randomPosition)(BOOL) = ^CGFloat(BOOL isWidth) {
+    CGFloat margin = 50.0;
+    CGFloat base = isWidth ? NSWidth(self.view.layer.frame) :
+                             NSHeight(self.view.layer.frame);
+    NSInteger random = 
+      arc4random_uniform(base - 2*margin) + margin;
+    
+    return (CGFloat) random;
   };
 
-  self.sublayer.position = CGPointMake(randomPosition(), randomPosition());
+  self.sublayer.position = CGPointMake(randomPosition(YES), 
+                                       randomPosition(NO));
+
   NSLog(@"%s, %@", __PRETTY_FUNCTION__,
                    NSStringFromPoint(self.sublayer.frame.origin));
 }

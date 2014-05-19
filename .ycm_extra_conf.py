@@ -43,6 +43,8 @@ flags = [
     'objective-c',
     '-I',
     './app/',
+    '-I',
+    './libs/',
 ]
 
 # Set this to the absolute path to the folder (NOT the file!) containing the

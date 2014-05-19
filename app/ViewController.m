@@ -1,3 +1,4 @@
+#import <POP/POP.h>
 #import "ViewController.h"
 
 
@@ -44,8 +45,14 @@
     return (CGFloat) random;
   };
 
-  self.sublayer.position = CGPointMake(randomPosition(YES), 
-                                       randomPosition(NO));
+  CGPoint position = CGPointMake(randomPosition(YES), 
+                                 randomPosition(NO));
+
+  POPSpringAnimation *animation =
+    [POPSpringAnimation animationWithPropertyNamed:kPOPLayerPosition];
+
+  animation.toValue = [NSValue valueWithCGPoint:position];
+  [self.sublayer pop_addAnimation:animation forKey:@"position"];
 
   NSLog(@"%s, %@", __PRETTY_FUNCTION__,
                    NSStringFromPoint(self.sublayer.frame.origin));
